@@ -25,6 +25,150 @@ using namespace std;
  * 4. The function that print out the current board statement
 *************************************************************************/
 
+int heuristic(Board board, char color){
+    int score = 0, myOrbs = 0, oppOrbs = 0;
+    bool vulnerable; // vulnerable means its neighbor is almost explosion
+    for(int i=0; i<5; i++){
+        for(int j=0; j<6; j++){
+            vulnerable = false;
+            if(board.get_cell_color(i, j) == color){
+                myOrbs += board.get_orbs_num(i, j);
+                switch(board.get_capacity(i, j)){
+                    case 2:
+                        if(i == 0 && j == 0){
+                            if(board.get_cell_color(0, 1) != color && board.get_cell_color(0, 1) != 'w' && board.get_orbs_num(0, 1) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(1, 0) != color && board.get_cell_color(1, 0) != 'w' && board.get_orbs_num(1, 0) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                        }
+                        else if(i == 0 && j == 5){
+                            if(board.get_cell_color(0, 4) != color && board.get_cell_color(0, 4) != 'w' && board.get_orbs_num(0, 4) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(1, 5) != color && board.get_cell_color(1, 5) != 'w' && board.get_orbs_num(1, 5) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                        }
+                        else if(i == 4 && j == 0){
+                            if(board.get_cell_color(3, 0) != color && board.get_cell_color(3, 0) != 'w' && board.get_orbs_num(3, 0) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(4, 1) != color && board.get_cell_color(4, 1) != 'w' && board.get_orbs_num(4, 1) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                        }
+                        else if(i == 4 && j == 5){
+                            if(board.get_cell_color(3, 5) != color && board.get_cell_color(3, 5) != 'w' && board.get_orbs_num(3, 5) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(4, 4) != color && board.get_cell_color(4, 4) != 'w' && board.get_orbs_num(4, 4) == 2){
+                                score -= (5 - 2);
+                                vulnerable = true;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if(i == 0){
+                            if(board.get_cell_color(i+1, j) != color && board.get_cell_color(i+1, j) != 'w' && board.get_orbs_num(i+1, j) == (board.get_capacity(i+1, j)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i, j-1) != color && board.get_cell_color(i, j-1) != 'w' && board.get_orbs_num(i, j-1) == (board.get_capacity(i, j-1)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i, j+1) != color && board.get_cell_color(i, j+1) != 'w' && board.get_orbs_num(i, j+1) == (board.get_capacity(i, j+1)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                        }
+                        else if(j == 0){
+                            if(board.get_cell_color(i, j+1) != color && board.get_cell_color(i, j+1) != 'w' && board.get_orbs_num(i, j+1) == (board.get_capacity(i, j+1)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i-1, j) != color && board.get_cell_color(i-1, j) != 'w' && board.get_orbs_num(i-1, j) == (board.get_capacity(i-1, j)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i+1, j) != color && board.get_cell_color(i+1, j) != 'w' && board.get_orbs_num(i+1, j) == (board.get_capacity(i+1, j)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                        }
+                        else if(i == 4){
+                            if(board.get_cell_color(i-1, j) != color && board.get_cell_color(i-1, j) != 'w' && board.get_orbs_num(i-1, j) == (board.get_capacity(i-1, j)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i, j-1) != color && board.get_cell_color(i, j-1) != 'w' && board.get_orbs_num(i, j-1) == (board.get_capacity(i, j-1)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i, j+1) != color && board.get_cell_color(i, j+1) != 'w' && board.get_orbs_num(i, j+1) == (board.get_capacity(i, j+1)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                        }
+                        else if(j == 5){
+                            if(board.get_cell_color(i, j-1) != color && board.get_cell_color(i, j-1) != 'w' && board.get_orbs_num(i, j-1) == (board.get_capacity(i, j-1)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i-1, j) != color && board.get_cell_color(i-1, j) != 'w' && board.get_orbs_num(i-1, j) == (board.get_capacity(i-1, j)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                            if(board.get_cell_color(i+1, j) != color && board.get_cell_color(i+1, j) != 'w' && board.get_orbs_num(i+1, j) == (board.get_capacity(i+1, j)-1)){
+                                score -= (5 - 3);
+                                vulnerable = true;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if(board.get_cell_color(i, j+1) != color && board.get_cell_color(i, j+1) != 'w' && board.get_orbs_num(i, j+1) == (board.get_capacity(i, j+1)-1)){
+                            score -= (5 - 4);
+                            vulnerable = true;
+                        }
+                        if(board.get_cell_color(i, j-1) != color && board.get_cell_color(i, j-1) != 'w' && board.get_orbs_num(i, j-1) == (board.get_capacity(i, j-1)-1)){
+                            score -= (5 - 4);
+                            vulnerable = true;
+                        }
+                        if(board.get_cell_color(i-1, j) != color && board.get_cell_color(i-1, j) != 'w' && board.get_orbs_num(i-1, j) == (board.get_capacity(i-1, j)-1)){
+                            score -= (5 - 4);
+                            vulnerable = true;
+                        }
+                        if(board.get_cell_color(i+1, j) != color && board.get_cell_color(i+1, j) != 'w' && board.get_orbs_num(i+1, j) == (board.get_capacity(i+1, j)-1)){
+                            score -= (5 - 4);
+                            vulnerable = true;
+                        }
+                        break;
+                }
+            }else if(board.get_cell_color(i, j) != color && board.get_cell_color(i, j) != 'w'){
+                oppOrbs += board.get_orbs_num(i, j);
+            }
+        }
+    }
+
+    score += myOrbs;
+    if(oppOrbs == 0 && myOrbs > 1)
+        return 10000
+    else if(myOrbs == 0 && oppOrbs > 1)
+        return -10000
+
+    // adjacent not yet
+
+    return score;
+}
 
 void algorithm_A(Board board, Player player, int index[]){
 
@@ -33,16 +177,33 @@ void algorithm_A(Board board, Player player, int index[]){
     // cout << board.get_cell_color(0, 0) << endl;
     // board.print_current_board(0, 0, 0);
 
-    //////////// Random Algorithm ////////////
-    // Here is the random algorithm for your reference, you can delete or comment it.
-    srand(time(NULL));
-    int row, col;
-    int color = player.get_color();
+    //////////// Experimental Heuristic ////////////
+    //srand(time(NULL));
+    int row, col, maxScore = -10001;
+    char color = player.get_color();
+    int score[5][6] = {{0}};
+    Board newBoard;
+
+    for(int i=0; i<5; i++){
+        for(int j=0; j<6; j++){
+            newBoard = board;
+            if(board.get_cell_color(row, col) == color || board.get_cell_color(row, col) == 'w'){
+                newBoard.place_orb(i, j, &player);
+                score[i][j] = heuristic(newBoard, color);
+            }else{
+                score[i][j] = -10002
+            }
+        }
+    }
     
-    while(1){
-        row = rand() % 5;
-        col = rand() % 6;
-        if(board.get_cell_color(row, col) == color || board.get_cell_color(row, col) == 'w') break;
+    for(int i=0; i<5; i++){
+        for(int j=0; j<6; j++){
+            if(score[i][j] > maxScore){
+                maxScore = score[i][j];
+                row = i;
+                col = j;
+            }
+        }
     }
 
     index[0] = row;
