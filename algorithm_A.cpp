@@ -161,9 +161,9 @@ int heuristic(Board board, char color){
 
     score += myOrbs;
     if(oppOrbs == 0 && myOrbs > 1)
-        return 10000
+        return 10000;
     else if(myOrbs == 0 && oppOrbs > 1)
-        return -10000
+        return -10000;
 
     // adjacent not yet
 
@@ -191,7 +191,7 @@ void algorithm_A(Board board, Player player, int index[]){
                 newBoard.place_orb(i, j, &player);
                 score[i][j] = heuristic(newBoard, color);
             }else{
-                score[i][j] = -10002
+                score[i][j] = -10002;
             }
         }
     }
