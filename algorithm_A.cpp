@@ -169,14 +169,7 @@ int heuristic(Board board, char color){
 }
 
 void algorithm_A(Board board, Player player, int index[]){
-
-    // cout << board.get_capacity(0, 0) << endl;
-    // cout << board.get_orbs_num(0, 0) << endl;
-    // cout << board.get_cell_color(0, 0) << endl;
-    // board.print_current_board(0, 0, 0);
-
     //////////// Experimental Heuristic ////////////
-    //srand(time(NULL));
     int row, col, maxScore = -10001;
     char color = player.get_color();
     int score[5][6] = {{0}};
