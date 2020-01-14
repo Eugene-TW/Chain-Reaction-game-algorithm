@@ -187,7 +187,7 @@ void algorithm_A(Board board, Player player, int index[]){
     for(int i=0; i<5; i++){
         for(int j=0; j<6; j++){
             newBoard = board;
-            if(board.get_cell_color(row, col) == color || board.get_cell_color(row, col) == 'w'){
+            if(board.get_cell_color(i, j) == color || board.get_cell_color(i, j) == 'w'){
                 newBoard.place_orb(i, j, &player);
                 score[i][j] = heuristic(newBoard, color);
             }else{
