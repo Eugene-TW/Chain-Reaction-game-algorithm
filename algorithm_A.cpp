@@ -165,8 +165,6 @@ int heuristic(Board board, char color){
     else if(myOrbs == 0 && oppOrbs > 1)
         return -10000;
 
-    // adjacent not yet
-
     return score;
 }
 
