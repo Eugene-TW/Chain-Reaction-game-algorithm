@@ -153,6 +153,16 @@ int heuristic(Board board, char color){
                         }
                         break;
                 }
+                if(vulnerable == false){
+                    if(board.get_capacity(i, j) == 3){
+                        score += 2;
+                    }else if(board.get_capacity(i, j) == 2){
+                        score += 3;
+                    }
+                    if(board.get_orbs_num(i, j) == board.get_capacity(i, j) - 1){
+                        score += 2;
+                    }
+                }
             }else if(board.get_cell_color(i, j) != color && board.get_cell_color(i, j) != 'w'){
                 oppOrbs += board.get_orbs_num(i, j);
             }
